@@ -3,6 +3,7 @@
     [formGroup]="formGroup"
     class="form-container"
     (keydown.enter)="$event.preventDefault()"
+    *ngIf="!updateSuccess"
   >
     <div class="header">
       <span> Phản hồi khách hàng </span>
@@ -30,7 +31,7 @@
         </mat-radio-group>
         <textarea
           matInput
-          formControlName="contend"
+          formControlName="content"
           placeholder="Góp ý thêm tại đây"
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
@@ -52,4 +53,9 @@
       </button>
     </div>
   </form>
+  <span
+    *ngIf="updateSuccess"
+    style="font-size: 32px; padding: 16px; background-color: #fff"
+    >Cảm ơn bạn vì đã đánh giá</span
+  >
 </div>
