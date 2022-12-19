@@ -1,9 +1,8 @@
-<div class="form-container">
+<div class="form-container" *ngIf="!updateSuccess">
   <form
     [formGroup]="formGroup"
     class="form-container"
     (keydown.enter)="$event.preventDefault()"
-    *ngIf="!updateSuccess"
   >
     <div class="header">
       <span> Phản hồi khách hàng </span>
@@ -53,9 +52,15 @@
       </button>
     </div>
   </form>
-  <span
-    *ngIf="updateSuccess"
-    style="font-size: 32px; padding: 16px; background-color: #fff"
-    >Cảm ơn bạn vì đã đánh giá</span
-  >
+</div>
+<div
+  *ngIf="updateSuccess"
+  style="
+    font-size: 32px;
+    padding: 16px;
+    line-height: 1.5;
+    background-color: #fff;
+  "
+>
+  Cảm ơn bạn vì đã đánh giá
 </div>
