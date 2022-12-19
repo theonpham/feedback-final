@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,13 +12,10 @@ export class AppComponent {
     `https://restaurant-server-eight.vercel.app/restaurant/api/feedback/update/${id}?_method=PUT`;
   id = '';
   updateSuccess = false;
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-  ) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
   ngOnInit() {
     var url = new URL(window.location.href);
-    this.id = url.pathname.replace('/id=','')
+    this.id = url.pathname.replace('/id=', '');
   }
   formGroup: FormGroup = this.fb.group({
     status: [null, [Validators.required]],
@@ -26,10 +23,14 @@ export class AppComponent {
     content: [null],
   });
   onSubmit() {
+    const now = moment();
+    const date = now.format('DD/MM/YYYY');
+    const time = now.format('hh:mm:ss');
     const input = this.formGroup.getRawValue();
-    console.log(input);
-    console.log(this.updateFeedbackURL(this.id));
-    
+    input.date = date;
+    input.time = time;
+    // console.log(input);
+    // console.log(this.updateFeedbackURL(this.id));
     this.http.put(this.updateFeedbackURL(this.id), input).subscribe(
       (data) => {
         this.updateSuccess = true;
